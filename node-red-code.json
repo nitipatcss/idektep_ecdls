@@ -1,0 +1,1207 @@
+[
+    {
+        "id": "84b61f96d1078e17",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0f4b934dbf64ee32",
+        "type": "mqtt in",
+        "z": "84b61f96d1078e17",
+        "name": "/ecdls/rpi_sensors",
+        "topic": "/ecdls/rpi_sensors",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "03ef61466f8903ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "0075ad4cdc7b1f3a"
+            ]
+        ]
+    },
+    {
+        "id": "0075ad4cdc7b1f3a",
+        "type": "change",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"cpu_temp\": msg.payload.cpu_temp,\t    \"cpu_load_avg\": msg.payload.cpu_load_avg,\t    \"disk_usage\": msg.payload.disk_usage\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 180,
+        "wires": [
+            [
+                "7640f9098acf770e",
+                "fa1c443d62cb96a9"
+            ]
+        ]
+    },
+    {
+        "id": "7640f9098acf770e",
+        "type": "influxdb out",
+        "z": "84b61f96d1078e17",
+        "influxdb": "8217bb0b47754715",
+        "name": "Insert data into database [sensor_data] ",
+        "measurement": "sensor_data",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "fa1c443d62cb96a9",
+        "type": "debug",
+        "z": "84b61f96d1078e17",
+        "name": "Debug RPI Sensor (IN)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "c74579d3c7eedf6d",
+        "type": "mqtt out",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/ecdls/rpi_sensors",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "03ef61466f8903ec",
+        "x": 910,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "1cec453efaa91492",
+        "type": "inject",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 240,
+        "wires": [
+            [
+                "c74579d3c7eedf6d"
+            ]
+        ]
+    },
+    {
+        "id": "aaedab5005cd443b",
+        "type": "mqtt in",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/esp32/output",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "03ef61466f8903ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 690,
+        "y": 520,
+        "wires": [
+            [
+                "ac0303b9ef316943",
+                "0abe1d48de613ca4"
+            ]
+        ]
+    },
+    {
+        "id": "96dc2cefaedfacf2",
+        "type": "mqtt out",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/esp32/output",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "03ef61466f8903ec",
+        "x": 1240,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "11ed7662dcb58ee1",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO1",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 1,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 620,
+        "wires": [
+            [
+                "649bda702aa1e3d0",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "065ed4835e80e430",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO2",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 660,
+        "wires": [
+            [
+                "828fe0f94dad9ad6",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "c509a5fa5dde0ffe",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO3",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 5,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 700,
+        "wires": [
+            [
+                "9ee6ac7fb688c554",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "71392e9c1ccfd798",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO4",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 740,
+        "wires": [
+            [
+                "7af42856451f725e",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "88171f29f5cff5d3",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO5",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 780,
+        "wires": [
+            [
+                "0766128f371bdf01",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "4c9cc5e9ba9de916",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO6",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 820,
+        "wires": [
+            [
+                "8d0c7e8e210dca4a",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "4b52a9ce44978a89",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO7",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 860,
+        "wires": [
+            [
+                "2434fec497226660",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "49be209818bb0089",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "DO8",
+        "tooltip": "",
+        "group": "a4018c3f5f583ded",
+        "order": 8,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 710,
+        "y": 900,
+        "wires": [
+            [
+                "95f13e3431edf5e3",
+                "9e6d307db166d06b"
+            ]
+        ]
+    },
+    {
+        "id": "649bda702aa1e3d0",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO1 Variable",
+        "func": "global.set(\"DO1\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "828fe0f94dad9ad6",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO2 Variable",
+        "func": "global.set(\"DO2\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9ee6ac7fb688c554",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO3 Variable",
+        "func": "global.set(\"DO3\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7af42856451f725e",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO4 Variable",
+        "func": "global.set(\"DO4\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0766128f371bdf01",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO5 Variable",
+        "func": "global.set(\"DO5\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8d0c7e8e210dca4a",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO6 Variable",
+        "func": "global.set(\"DO6\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2434fec497226660",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO7 Variable",
+        "func": "global.set(\"DO7\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "95f13e3431edf5e3",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global DO8 Variable",
+        "func": "global.set(\"DO8\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b8b846d00b9ca405",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Global Variable Function Digital Output",
+        "func": "let do1 = String(global.get('DO1'));\nlet do2 = String(global.get('DO2'));\nlet do3 = String(global.get('DO3'));\nlet do4 = String(global.get('DO4'));\nlet do5 = String(global.get('DO5'));\nlet do6 = String(global.get('DO6'));\nlet do7 = String(global.get('DO7'));\nlet do8 = String(global.get('DO8'));\nlet data = do1.concat(do2, do3, do4, do5, do6, do7, do8);\nmsg.payload = data;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 660,
+        "wires": [
+            [
+                "8097fdf0db2d6420",
+                "96dc2cefaedfacf2"
+            ]
+        ]
+    },
+    {
+        "id": "8097fdf0db2d6420",
+        "type": "debug",
+        "z": "84b61f96d1078e17",
+        "name": "Debug Output (OUT)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "9e6d307db166d06b",
+        "type": "change",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "num",
+                "to": "0",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "num",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 620,
+        "wires": [
+            [
+                "b8b846d00b9ca405"
+            ]
+        ]
+    },
+    {
+        "id": "fd3fb9e7a3be9c88",
+        "type": "ui_button",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "group": "a4018c3f5f583ded",
+        "order": 9,
+        "width": 6,
+        "height": 2,
+        "passthru": false,
+        "label": "TURN OFF ALL",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "0",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 520,
+        "y": 760,
+        "wires": [
+            [
+                "11ed7662dcb58ee1",
+                "065ed4835e80e430",
+                "c509a5fa5dde0ffe",
+                "71392e9c1ccfd798",
+                "88171f29f5cff5d3",
+                "4c9cc5e9ba9de916",
+                "4b52a9ce44978a89",
+                "49be209818bb0089"
+            ]
+        ]
+    },
+    {
+        "id": "9b8a1e997f4ae35b",
+        "type": "influxdb out",
+        "z": "84b61f96d1078e17",
+        "influxdb": "63685da1dad3f13e",
+        "name": "Insert data into database [output_data] ",
+        "measurement": "output_data",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1310,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0abe1d48de613ca4",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Global Variable Function Output Data",
+        "func": "let outputData = String(global.get('outputData'));\nvar do1 = outputData.slice(0, 1);\nvar do2 = outputData.slice(1, 2);\nvar do3 = outputData.slice(2, 3);\nvar do4 = outputData.slice(3, 4);\nvar do5 = outputData.slice(4, 5);\nvar do6 = outputData.slice(5, 6);\nvar do7 = outputData.slice(6, 7);\nvar do8 = outputData.slice(7, 8);\n\nlet data = {\n    \"D1\": convertToOnOff(do1),\n    \"D2\": convertToOnOff(do2),\n    \"D3\": convertToOnOff(do3),\n    \"D4\": convertToOnOff(do4),\n    \"D5\": convertToOnOff(do5),\n    \"D6\": convertToOnOff(do6),\n    \"D7\": convertToOnOff(do7),\n    \"D8\": convertToOnOff(do8),\n}\n\nmsg.payload = data\nglobal.set(\"currentData\", data);\n\nreturn msg;\n\nfunction convertToOnOff(value) {\n    if (value === \"1\") {\n        return \"ON\";\n    } else if (value === \"0\") {\n        return \"OFF\";\n    } else {\n        return \"Invalid value\";\n    }\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 520,
+        "wires": [
+            [
+                "adc4d69c2be1385a",
+                "9b8a1e997f4ae35b"
+            ]
+        ]
+    },
+    {
+        "id": "ac0303b9ef316943",
+        "type": "function",
+        "z": "84b61f96d1078e17",
+        "name": "Set Global outputDataVariable",
+        "func": "global.set(\"outputData\", msg.payload);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "adc4d69c2be1385a",
+        "type": "debug",
+        "z": "84b61f96d1078e17",
+        "name": "Debug Output (IN)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b5f5ab52893a0f41",
+        "type": "mqtt in",
+        "z": "84b61f96d1078e17",
+        "name": "/ecdls/modbus",
+        "topic": "/ecdls/modbus",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "03ef61466f8903ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 690,
+        "y": 340,
+        "wires": [
+            [
+                "44a976d42fcc4121"
+            ]
+        ]
+    },
+    {
+        "id": "44a976d42fcc4121",
+        "type": "change",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"temp\": msg.payload.temp,\t    \"humid\": msg.payload.humid\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 340,
+        "wires": [
+            [
+                "730638d2fa7cc1a8",
+                "def4663e914e78bf"
+            ]
+        ]
+    },
+    {
+        "id": "0de98d5657966036",
+        "type": "mqtt out",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/ecdls/modbus",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "03ef61466f8903ec",
+        "x": 900,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "10fc2317535adcc5",
+        "type": "inject",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 400,
+        "wires": [
+            [
+                "0de98d5657966036"
+            ]
+        ]
+    },
+    {
+        "id": "730638d2fa7cc1a8",
+        "type": "debug",
+        "z": "84b61f96d1078e17",
+        "name": "Debug RPI Modbus (IN)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "def4663e914e78bf",
+        "type": "influxdb out",
+        "z": "84b61f96d1078e17",
+        "influxdb": "ac27c54ce8b68b92",
+        "name": "Insert data into database [modbus_data] ",
+        "measurement": "modbus_data",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1320,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "a0155c9f7f4e997d",
+        "type": "ui_switch",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "label": "Manual/Auto",
+        "tooltip": "",
+        "group": "c554a672f48416e5",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 690,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "846004487b16d6a8",
+        "type": "mqtt in",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/esp32/input1",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "03ef61466f8903ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 690,
+        "y": 1000,
+        "wires": [
+            [
+                "3a994ff932a27f79"
+            ]
+        ]
+    },
+    {
+        "id": "3a994ff932a27f79",
+        "type": "debug",
+        "z": "84b61f96d1078e17",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "2a6555b588f9023c",
+        "type": "mqtt in",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/esp32/input2",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "03ef61466f8903ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 690,
+        "y": 1060,
+        "wires": [
+            [
+                "36c27fb9a686af5a"
+            ]
+        ]
+    },
+    {
+        "id": "36c27fb9a686af5a",
+        "type": "debug",
+        "z": "84b61f96d1078e17",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "fc9952f93296dcfb",
+        "type": "mqtt out",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/esp32/input1",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "03ef61466f8903ec",
+        "x": 1320,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "3b27c17ed652f6a2",
+        "type": "inject",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1120,
+        "y": 1000,
+        "wires": [
+            [
+                "fc9952f93296dcfb",
+                "146dee4f1db09be1"
+            ]
+        ]
+    },
+    {
+        "id": "146dee4f1db09be1",
+        "type": "mqtt out",
+        "z": "84b61f96d1078e17",
+        "name": "",
+        "topic": "/esp32/input2",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "03ef61466f8903ec",
+        "x": 1320,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "03ef61466f8903ec",
+        "type": "mqtt-broker",
+        "name": "MQTT Docker",
+        "broker": "192.168.131.114",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8217bb0b47754715",
+        "type": "influxdb",
+        "hostname": "192.168.131.114",
+        "port": "8086",
+        "protocol": "http",
+        "database": "sensor_data",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "a4018c3f5f583ded",
+        "type": "ui_group",
+        "name": "Output Panel Control",
+        "tab": "a17446ca2b22c515",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "63685da1dad3f13e",
+        "type": "influxdb",
+        "hostname": "192.168.131.114",
+        "port": "8086",
+        "protocol": "http",
+        "database": "output_data",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "ac27c54ce8b68b92",
+        "type": "influxdb",
+        "hostname": "192.168.131.114",
+        "port": "8086",
+        "protocol": "http",
+        "database": "modbus_data",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c554a672f48416e5",
+        "type": "ui_group",
+        "name": "Trigger Mode",
+        "tab": "4ee957cbf6be7b91",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a17446ca2b22c515",
+        "type": "ui_tab",
+        "name": "Output Panel",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4ee957cbf6be7b91",
+        "type": "ui_tab",
+        "name": "Configuration",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
